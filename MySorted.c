@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "MyType.h"
+#include "MySorted.h"
+
+/* 交换顺序表L中下标为i和j的值 */
+VOID swap(SortedList *L, INT i, INT j)
+{
+	L->temp = L->array[i];
+	L->array[i] = L->array[j];
+	L->array[j] = L->temp;
+}
+
+/* 冒泡法排序 */
+VOID BubbleSorted(SortedList *L)
+{
+	int i, j;
+	int count = 0;
+	int cmp = 0;
+	STATUS flag = TRUE;
+	
+	for(i=0; i<L->length-1 && flag; i++) // 遍历比较次数为 
+	{
+		flag = FALSE;
+		for(j=0; j<L->length-1-i;j++)
+		{
+			cmp++;
+			if (L->array[j]>L->array[j+1])
+			{
+				swap(L, j, j+1);
+				flag = TRUE;	/* 如果有数据交换说明，flag设置为TRUE，还需要排序，否则说明之前的比较已经排好序了，下一次i的循环排序不需要再执行了 */
+				count++;
+			}
+		}
+	}
+	
+	printf("冒泡法排序数据相互比较次数%d,交换次数%d:\n", cmp, count);
+}
+
+/* 选择排序 */
+VOID SelectSorted(SortedList *L)
+{
+	int i,j; 
+	int min;
+	int count = 0;
+	int cmp = 0;
+	
+	for(i=0; i<L->length-1; i++)
+	{
+		min = i;
+		for(j=i+1; j<L->length; j++)
+		{
+			cmp++;
+			if(L->array[min]>L->array[j])
+			{
+				min = j;
+			}
+		}
+		
+		if(min != i)
+		{
+			count++;
+			swap(L, i, min);
+		}
+	}
+	printf("选择排序法的比较次数为%d,数据交换次数为%d\n", cmp, count);
+} 
+
+/* 测试排序算法 */
+VOID TestSorted()
+{
+	int i;
+	SortedList L;
+	
+	for (i=0; i<MAXSORTEDSIZE; i++)
+	{
+		L.array[i] = MAXSORTEDSIZE-i;
+	}
+	L.length = MAXSORTEDSIZE;
+	
+	printf("排序前数列:\n"); 
+	for (i=0; i<MAXSORTEDSIZE; i++)
+	{
+		printf("%d ", L.array[i]);
+	}
+	printf("\n");
+	//BubbleSorted(&L);
+	SelectSorted(&L);
+	printf("冒泡法排序后序列:\n"); 
+	for (i=0; i<MAXSORTEDSIZE; i++)
+	{
+		printf("%d ", L.array[i]);
+	}
+	
+} 
+
