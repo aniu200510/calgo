@@ -19,6 +19,12 @@ VOID BubbleSorted(SortedList *L);
 /* —°‘Ò≈≈–Ú */
 VOID SelectSorted(SortedList *L); 
 
+/* ≤Â»Î≈≈–Ú */ 
+VOID InsertSorted(SortedList *L); 
+
+/* œ£∂˚≈≈–Ú */
+VOID ShellSorted(SortedList *L);
+
 /* ≤‚ ‘≈≈–ÚÀ„∑® */
 VOID TestSorted();
 #endif 

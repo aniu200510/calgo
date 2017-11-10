@@ -66,6 +66,51 @@ VOID SelectSorted(SortedList *L)
 	printf("选择排序法的比较次数为%d,数据交换次数为%d\n", cmp, count);
 } 
 
+/* 插入排序 */
+VOID InsertSorted(SortedList *L)
+{
+	int in, out;
+	
+	
+	for(out = 1; out<L->length; out++)	//需要出入排序的数据个数
+	{
+		L->temp = L->array[out];
+		in = out;
+		while(in>0 && L->array[in-1] >= L->temp)
+		{
+			L->array[in] = L->array[in-1];
+			in--;
+		} 
+		L->array[in] = L->temp;
+	} 
+}
+
+/* 希尔排序 */
+VOID ShellSorted(SortedList *L)
+{
+	int gap;
+	int i, j;
+	
+	int count=0;
+	
+	for(gap=L->length/2;  gap>0; gap/=2)
+	{
+		for(i=gap; i<L->length; i++)
+		{
+			j = i;
+			while(j-gap>=0 && L->array[j]<L->array[j-gap])
+			{
+				count++;
+				L->temp = L->array[j];
+				L->array[j] = L->array[j-gap];
+				L->array[j-gap] = L->temp;
+				j-=gap;
+			}
+		}
+	}
+	printf("希尔排序比较次数count=%d\n", count);
+}
+
 /* 测试排序算法 */
 VOID TestSorted()
 {
@@ -85,12 +130,23 @@ VOID TestSorted()
 	}
 	printf("\n");
 	//BubbleSorted(&L);
-	SelectSorted(&L);
+	//SelectSorted(&L);
 	printf("冒泡法排序后序列:\n"); 
 	for (i=0; i<MAXSORTEDSIZE; i++)
 	{
 		printf("%d ", L.array[i]);
 	}
-	
+	printf("\n插入排序后序列:\n");
+	//InsertSorted(&L);
+	for (i=0; i<MAXSORTEDSIZE; i++)
+	{
+		printf("%d ", L.array[i]);
+	}
+	printf("\n希尔排序后序列：\n");
+	ShellSorted(&L);
+	for (i=0; i<MAXSORTEDSIZE; i++)
+	{
+		printf("%d ", L.array[i]);
+	}
 } 
 
